@@ -24,23 +24,23 @@ int main()
     std::string line;
     std::map<char, double> time_table;
     
+    
     while(std::getline(std::cin, line) )
     {
-        char index;
         if(line[0] == 'A' || line[0] == 'B' || line[0] == 'D') 
         {
-            index = line[0];
-            
-            int tmp_i = 0;
-            while(line[tmp_i] != '-' || line[tmp_i+1] != '-') tmp_i ++ ;
-            
-            if(time_table.find(index) == time_table.end() ) 
-                time_table[index] = str_time(line.substr(tmp_i + 2));
-            else 
-                time_table[index] += str_time(line.substr(tmp_i + 2));
+            size_t tmp_i = line.find("--");
+            if(tmp_i != std::string::npos)
+            {
+                if(time_table.find(line[0]) == time_table.end() ) 
+                    time_table[line[0] ] = str_time(line.substr(tmp_i + 2));
+                else 
+                    time_table[line[0] ] += str_time(line.substr(tmp_i + 2));
+            }
         }
         if(line[0] == 'q') break;
     }
+    
     
     std::cout << "TIME TABLE : \n";
     for(auto it : time_table) std::cout << it.first << " : " << it.second << '\n';
